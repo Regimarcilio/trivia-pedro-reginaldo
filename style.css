@@ -1,0 +1,166 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+h1 {
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+#question-container {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 700px;
+    width: 100%;
+    min-height: 400px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+/* Tela Inicial */
+#tela-inicial {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#tela-inicial h2 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 2rem;
+}
+
+#tela-inicial p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+}
+
+#tela-inicial input {
+    padding: 12px 20px;
+    font-size: 1rem;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 300px;
+    transition: border-color 0.3s;
+}
+
+#tela-inicial input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#tela-inicial button {
+    margin-top: 15px;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#tela-inicial button:hover {
+    background: #5a67d8;
+    transform: scale(1.05);
+}
+
+/* Questões */
+.questao {
+    margin-bottom: 20px;
+}
+
+.questao h3 {
+    color: #667eea;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.questao p {
+    color: #333;
+    font-size: 1.2rem;
+    line-height: 1.6;
+}
+
+.respostas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.respostas button {
+    padding: 12px 20px;
+    font-size: 1rem;
+    background: #f0f4ff;
+    border: 2px solid #e0e7ff;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.respostas button:hover:not(:disabled) {
+    background: #e0e7ff;
+    transform: translateX(5px);
+}
+
+.respostas button:disabled {
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+/* Resultado Final */
+#resultado-final {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#resultado-final h2 {
+    color: #333;
+    font-size: 2rem;
+    margin-bottom: 15px;
+}
+
+#resultado-final p {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+#resultado-final strong {
+    color: #667eea;
+}
+
+#resultado-final button {
+    margin-top: 20px;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+}
+
+#resultado-final button:hover {
+    background: #5a67d8;
+    transform: scale(1.05);
+}

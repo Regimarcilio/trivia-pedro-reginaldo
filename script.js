@@ -22,18 +22,58 @@ const fetchTradutor = async (texto) => {
     }
 }
 
-const mostrarQuestoes = async () => {
+const mostrarTelaInicial = () => {
     const container = document.querySelector('#question-container');
+    container.innerHTML = `
+        <div id="tela-inicial">
+            <h2>Bem-vindo à Trivia!</h2>
+            <p>Digite seu nome para começar:</p>
+            <input type="text" id="nome-jogador" placeholder="Seu nome aqui..." maxlength="30">
+            <br>
+            <button id="btn-iniciar">Iniciar Jogo</button>
+        </div>
+    `;
+
+    const btnIniciar = document.querySelector('#btn-iniciar');
+    const inputNome = document.querySelector('#nome-jogador');
+
+    btnIniciar.addEventListener('click', () => {
+        const nome = inputNome.value.trim();
+        if (nome === '') {
+            alert('Por favor, digite seu nome!');
+            return;
+        }
+        mostrarQuestoes(nome);
+    });
+
+    // Permitir pressionar Enter para iniciar
+    inputNome.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            btnIniciar.click();
+        }
+    });
+};
+
+const mostrarQuestoes = async (nomeJogador) => {
+    const container = document.querySelector('#question-container');
+    container.innerHTML = `<p>Jogador: <strong>${nomeJogador}</strong></p>`;
+    
     const questions = await fetchTrivia();
     let acertos = 0;
+    let numeroQuestao = 1;
     
     for (const question of questions){
-        container.innerHTML = '';
-        const novaQuestao = document.createElement('div');
-        novaQuestao.innerHTML = decodeURIComponent(await fetchTradutor(question.question)) + '<br>';
-        container.appendChild(novaQuestao);
+        const divQuestao = document.createElement('div');
+        divQuestao.className = 'questao';
+        divQuestao.innerHTML = `
+            <h3>Questão ${numeroQuestao} de ${questions.length}</h3>
+            <p>${decodeURIComponent(await fetchTradutor(question.question))}</p>
+        `;
+        container.appendChild(divQuestao);
         
-        const divResposta = document.createElement('div');        
+        const divResposta = document.createElement('div');
+        divResposta.className = 'respostas';
+        
         const respostas = [...question.incorrect_answers, question.correct_answer];
         respostas.sort((a, b) => Math.random() - 0.5);
     
@@ -48,7 +88,7 @@ const mostrarQuestoes = async () => {
         const respostaTraduzida = decodeURIComponent(await fetchTradutor(question.correct_answer));
     
         await new Promise((resolve) => {
-            const botoesResposta = document.querySelectorAll('button');
+            const botoesResposta = document.querySelectorAll('.respostas button');
             botoesResposta.forEach((botao) => {
                 botao.onclick = () => {
                     if (botao.innerText == respostaTraduzida){
@@ -62,15 +102,35 @@ const mostrarQuestoes = async () => {
                             }
                         });
                     }
+                    // Desabilitar todos os botões após clicar
+                    botoesResposta.forEach((bt) => {
+                        bt.disabled = true;
+                    });
+                    
                     setTimeout(() => {
                         resolve();
                     }, 1000)
                 }
             });
-        })
+        });
+        
+        numeroQuestao++;
     }
 
-    container.innerHTML = `Você acertou ${acertos}/5 questões!`
+    container.innerHTML = `
+        <div id="resultado-final">
+            <h2>🎉 Fim de Jogo! 🎉</h2>
+            <p>Jogador: <strong>${nomeJogador}</strong></p>
+            <p>Você acertou <strong>${acertos}</strong> de ${questions.length} questões!</p>
+            <p>${acertos === questions.length ? '🏆 Parabéns, você é um gênio!' : '👏 Continue praticando!'}</p>
+            <button id="btn-reiniciar">Jogar Novamente</button>
+        </div>
+    `;
+
+    document.querySelector('#btn-reiniciar')?.addEventListener('click', () => {
+        mostrarTelaInicial();
+    });
 }
 
-mostrarQuestoes();
+// Iniciar o jogo com a tela inicial
+mostrarTelaInicial();
