@@ -6,161 +6,432 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 20px;
+    justify-content: center;
+    align-items: flex-end; /* Alinha à direita */
+    padding: 40px 60px;
+    position: relative;
+    background: #0a0a0a;
+    overflow-x: hidden;
+}
+
+/* FUNDO COM A IMAGEM DO WARFACE */
+body {
+    background: url('https://wallpaper.forfun.com/fetch/52/5265fdc8c0a87da8b42bb1f130a56294.jpeg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* Overlay mais sutil para legibilidade */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+h1, #question-container {
+    position: relative;
+    z-index: 1;
+    max-width: 550px;
+    width: 100%;
 }
 
 h1 {
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    margin-bottom: 30px;
-    font-size: 2.5rem;
+    color: #e8d5a3;
+    text-shadow: 0 0 30px rgba(200, 150, 50, 0.25), 0 2px 10px rgba(0,0,0,0.9);
+    margin-bottom: 25px;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding-bottom: 8px;
+    border-bottom: 2px solid rgba(200, 150, 50, 0.3);
+    text-align: right; /* Alinhado à direita */
+    background: none;
+    backdrop-filter: none;
+    box-shadow: none;
+    margin-left: auto; /* Empurra para direita */
+}
+
+h1::before {
+    content: '⚔ ';
+    font-size: 1.8rem;
+    opacity: 0.5;
+}
+
+h1::after {
+    content: ' ⚔';
+    font-size: 1.8rem;
+    opacity: 0.5;
 }
 
 #question-container {
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    max-width: 700px;
-    width: 100%;
-    min-height: 400px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    background: none;
+    backdrop-filter: none;
+    border-radius: 0;
+    padding: 0;
+    min-height: 300px;
+    border: none;
+    box-shadow: none;
+    color: #e8e8e8;
+    text-align: right; /* Alinhado à direita */
+    margin-left: auto; /* Empurra para direita */
 }
 
-/* Tela Inicial */
+/* ===== TELA INICIAL ===== */
 #tela-inicial {
-    text-align: center;
-    padding: 20px 0;
+    text-align: center; /* Alinhado à direita */
+    padding: 0;
 }
 
 #tela-inicial h2 {
-    color: #333;
-    margin-bottom: 15px;
-    font-size: 2rem;
+    color: #e8d5a3;
+    font-size: 2.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 0 0 40px rgba(200, 150, 50, 0.2), 0 2px 10px rgba(0,0,0,0.8);
+    margin-bottom: 8px;
+    background: none;
+    backdrop-filter: none;
+}
+
+#tela-inicial .subtitulo {
+    color: rgba(200, 200, 200, 0.6);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(200, 150, 50, 0.15);
+    padding-bottom: 15px;
 }
 
 #tela-inicial p {
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 20px;
+    color: rgba(200, 200, 200, 0.8);
+    font-size: 1rem;
+    margin-bottom: 18px;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 #tela-inicial input {
     padding: 12px 20px;
     font-size: 1rem;
-    border: 2px solid #ddd;
-    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(200, 150, 50, 0.25);
+    border-radius: 4px;
     width: 80%;
-    max-width: 300px;
-    transition: border-color 0.3s;
+    max-width: 320px;
+    color: #e8d5a3;
+    transition: all 0.3s;
+    font-family: inherit;
+    backdrop-filter: blur(4px);
+    text-align: left; /* Texto à esquerda */
+    direction: ltr; /* Placeholder à esquerda */
 }
 
 #tela-inicial input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #c8962e;
+    box-shadow: 0 0 25px rgba(200, 150, 50, 0.1);
+    background: rgba(0, 0, 0, 0.7);
+}
+
+#tela-inicial input::placeholder {
+    color: rgba(200, 200, 200, 0.3);
+    font-style: italic;
+    text-align: right;
 }
 
 #tela-inicial button {
-    margin-top: 15px;
-    padding: 12px 40px;
-    font-size: 1.1rem;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
+    margin-top: 20px;
+    padding: 12px 45px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: rgba(200, 150, 50, 0.15);
+    color: #e8d5a3;
+    border: 1px solid rgba(200, 150, 50, 0.3);
+    border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
+    box-shadow: none;
 }
 
 #tela-inicial button:hover {
-    background: #5a67d8;
-    transform: scale(1.05);
+    background: rgba(200, 150, 50, 0.25);
+    border-color: #c8962e;
+    box-shadow: 0 0 30px rgba(200, 150, 50, 0.15);
+    transform: scale(1.02);
 }
 
-/* Questões */
-.questao {
+/* ===== PROGRESSO ===== */
+.progresso {
+    background: none;
+    border: none;
+    padding: 0 0 15px 0;
     margin-bottom: 20px;
+    border-bottom: 1px solid rgba(200, 150, 50, 0.12);
+    text-align: right;
+}
+
+.progresso p {
+    color: rgba(200, 200, 200, 0.6);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    margin: 0;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
+}
+
+.progresso strong {
+    color: #e8d5a3;
+}
+
+/* ===== QUESTÕES ===== */
+.questao {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(200, 150, 50, 0.08);
+    text-align: left;
 }
 
 .questao h3 {
-    color: #667eea;
-    font-size: 1rem;
+    color: rgba(200, 150, 50, 0.6);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
     margin-bottom: 10px;
+    font-weight: 600;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 .questao p {
-    color: #333;
-    font-size: 1.2rem;
-    line-height: 1.6;
+    color: #f0f0f0;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.8);
 }
 
 .respostas {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     margin-top: 15px;
+    align-items: center; /* Botões alinhados à direita */
 }
 
 .respostas button {
-    padding: 12px 20px;
-    font-size: 1rem;
-    background: #f0f4ff;
-    border: 2px solid #e0e7ff;
-    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.95rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(200, 200, 200, 0.1);
+    border-radius: 4px;
     cursor: pointer;
     transition: all 0.3s;
-    text-align: left;
+    text-align: left; /* Texto à esquerda    */
+    color: #e8e8e8;
+    font-family: inherit;
+    font-weight: 300;
+    backdrop-filter: blur(4px);
+    width: 100%;
+    max-width: 500px;
 }
 
 .respostas button:hover:not(:disabled) {
-    background: #e0e7ff;
-    transform: translateX(5px);
+    background: rgba(200, 150, 50, 0.15);
+    border-color: rgba(200, 150, 50, 0.3);
+    transform: translateX(-5px); /* Move para esquerda no hover */
+    box-shadow: 0 0 20px rgba(200, 150, 50, 0.05);
 }
 
 .respostas button:disabled {
     cursor: not-allowed;
-    opacity: 0.8;
+    opacity: 0.5;
 }
 
-/* Resultado Final */
+/* Feedback visual - transparente e sutil */
+.respostas button.correta {
+    background: rgba(45, 125, 45, 0.3) !important;
+    border-color: rgba(45, 125, 45, 0.5) !important;
+    box-shadow: 0 0 30px rgba(45, 125, 45, 0.15);
+}
+
+.respostas button.errada {
+    background: rgba(125, 45, 45, 0.3) !important;
+    border-color: rgba(125, 45, 45, 0.5) !important;
+    box-shadow: 0 0 30px rgba(125, 45, 45, 0.15);
+}
+
+/* ===== RESULTADO FINAL ===== */
 #resultado-final {
     text-align: center;
-    padding: 20px 0;
+    padding: 0;
 }
 
 #resultado-final h2 {
-    color: #333;
-    font-size: 2rem;
+    color: #e8d5a3;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    text-shadow: 0 0 40px rgba(200, 150, 50, 0.2), 0 2px 10px rgba(0,0,0,0.8);
     margin-bottom: 15px;
 }
 
 #resultado-final p {
-    color: #666;
-    font-size: 1.2rem;
+    color: rgba(200, 200, 200, 0.8);
+    font-size: 1.1rem;
     margin-bottom: 10px;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 5px rgba(0,0,0,0.5);
 }
 
 #resultado-final strong {
-    color: #667eea;
+    color: #e8d5a3;
+    font-weight: 700;
+}
+
+#resultado-final .mensagem-final {
+    color: #c8962e;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 15px 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 30px rgba(200, 150, 50, 0.15);
 }
 
 #resultado-final button {
     margin-top: 20px;
-    padding: 12px 40px;
-    font-size: 1.1rem;
-    background: #667eea;
-    color: white;
-    border: none;
-    border-radius: 10px;
+    padding: 12px 45px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background: rgba(200, 150, 50, 0.1);
+    color: #e8d5a3;
+    border: 1px solid rgba(200, 150, 50, 0.2);
+    border-radius: 4px;
     cursor: pointer;
-    transition: transform 0.2s, background 0.3s;
+    transition: all 0.3s;
+    backdrop-filter: blur(4px);
 }
 
 #resultado-final button:hover {
-    background: #5a67d8;
-    transform: scale(1.05);
+    background: rgba(200, 150, 50, 0.2);
+    border-color: #c8962e;
+    box-shadow: 0 0 30px rgba(200, 150, 50, 0.1);
+}
+
+/* ===== RESPONSIVIDADE ===== */
+@media (max-width: 768px) {
+    body {
+        padding: 30px 25px;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 40px;
+    }
+
+    h1, #question-container {
+        max-width: 100%;
+        text-align: center;
+        margin-left: 0;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        text-align: center;
+        border-bottom: 2px solid rgba(200, 150, 50, 0.2);
+    }
+
+    h1::before, h1::after {
+        font-size: 1.2rem;
+    }
+
+    #question-container {
+        text-align: center;
+    }
+
+    #tela-inicial {
+        text-align: center;
+    }
+
+    #tela-inicial h2 {
+        font-size: 2rem;
+    }
+
+    .questao {
+        text-align: center;
+    }
+
+    .questao p {
+        font-size: 1.1rem;
+    }
+
+    .respostas {
+        align-items: center;
+    }
+
+    .respostas button {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .respostas button:hover:not(:disabled) {
+        transform: translateX(0);
+    }
+
+    .progresso {
+        text-align: center;
+        border-bottom: 1px solid rgba(200, 150, 50, 0.12);
+    }
+
+    #resultado-final {
+        text-align: center;
+    }
+
+    #tela-inicial input {
+        width: 90%;
+        text-align: center;
+        direction: ltr;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 20px 15px;
+        padding-top: 30px;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+    }
+
+    #tela-inicial h2 {
+        font-size: 1.6rem;
+    }
+
+    .questao p {
+        font-size: 1rem;
+    }
+
+    .respostas button {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+    }
+
+    #tela-inicial button,
+    #resultado-final button {
+        padding: 10px 30px;
+        font-size: 0.85rem;
+    }
 }

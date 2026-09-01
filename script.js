@@ -26,11 +26,12 @@ const mostrarTelaInicial = () => {
     const container = document.querySelector('#question-container');
     container.innerHTML = `
         <div id="tela-inicial">
-            <h2>Bem-vindo à Trivia!</h2>
-            <p>Digite seu nome para começar:</p>
-            <input type="text" id="nome-jogador" placeholder="Seu nome aqui..." maxlength="30">
+            <h2>🎯 OPERAÇÃO TRIVIA</h2>
+            <p class="subtitulo">◆ Forças Especiais ◆</p>
+            <p>Identifique-se, soldado:</p>
+            <input type="text" id="nome-jogador" placeholder="Digite seu codinome..." maxlength="30">
             <br>
-            <button id="btn-iniciar">Iniciar Jogo</button>
+            <button id="btn-iniciar">INICIAR MISSÃO</button>
         </div>
     `;
 
@@ -40,13 +41,12 @@ const mostrarTelaInicial = () => {
     btnIniciar.addEventListener('click', () => {
         const nome = inputNome.value.trim();
         if (nome === '') {
-            alert('Por favor, digite seu nome!');
+            alert('⚠️ Identifique-se, soldado!');
             return;
         }
-        mostrarQuestoes(nome);
+        iniciarTrivia(nome);
     });
 
-    // Permitir pressionar Enter para iniciar
     inputNome.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             btnIniciar.click();
@@ -54,23 +54,39 @@ const mostrarTelaInicial = () => {
     });
 };
 
-const mostrarQuestoes = async (nomeJogador) => {
+const iniciarTrivia = async (nomeJogador) => {
     const container = document.querySelector('#question-container');
-    container.innerHTML = `<p>Jogador: <strong>${nomeJogador}</strong></p>`;
-    
     const questions = await fetchTrivia();
     let acertos = 0;
-    let numeroQuestao = 1;
-    
-    for (const question of questions){
+    let questaoAtual = 0;
+
+    // Função para mostrar uma questão específica
+    const mostrarQuestao = async (indice) => {
+        // Limpa o container
+        container.innerHTML = '';
+        
+        // Mostra o nome do jogador e progresso
+        const header = document.createElement('div');
+        header.className = 'progresso';
+        header.innerHTML = `
+            <p>👤 ${nomeJogador} | Questão ${indice + 1} de ${questions.length}</p>
+        `;
+        container.appendChild(header);
+
+        const question = questions[indice];
+        
+        // Cria a div da questão
         const divQuestao = document.createElement('div');
         divQuestao.className = 'questao';
+        
+        const perguntaTraduzida = decodeURIComponent(await fetchTradutor(question.question));
         divQuestao.innerHTML = `
-            <h3>Questão ${numeroQuestao} de ${questions.length}</h3>
-            <p>${decodeURIComponent(await fetchTradutor(question.question))}</p>
+            <h3>🎯 MISSÃO ${indice + 1}</h3>
+            <p>${perguntaTraduzida}</p>
         `;
         container.appendChild(divQuestao);
         
+        // Cria as respostas
         const divResposta = document.createElement('div');
         divResposta.className = 'respostas';
         
@@ -87,43 +103,63 @@ const mostrarQuestoes = async (nomeJogador) => {
     
         const respostaTraduzida = decodeURIComponent(await fetchTradutor(question.correct_answer));
     
+        // Aguarda a resposta do usuário
         await new Promise((resolve) => {
             const botoesResposta = document.querySelectorAll('.respostas button');
+            let jaRespondeu = false;
+            
             botoesResposta.forEach((botao) => {
                 botao.onclick = () => {
+                    if (jaRespondeu) return;
+                    jaRespondeu = true;
+                    
                     if (botao.innerText == respostaTraduzida){
-                        botao.style.backgroundColor = 'green';
+                        botao.style.backgroundColor = '#2d7d2d';
+                        botao.style.borderColor = '#3a9a3a';
                         acertos++;
                     } else {
-                        botao.style.backgroundColor = 'red';
+                        botao.style.backgroundColor = '#7d2d2d';
+                        botao.style.borderColor = '#9a3a3a';
                         botoesResposta.forEach((bt) => {
                             if (bt.innerText == respostaTraduzida){
-                                bt.style.backgroundColor = 'green';
+                                bt.style.backgroundColor = '#2d7d2d';
+                                bt.style.borderColor = '#3a9a3a';
                             }
                         });
                     }
-                    // Desabilitar todos os botões após clicar
+                    
+                    // Desabilita todos os botões
                     botoesResposta.forEach((bt) => {
                         bt.disabled = true;
                     });
                     
+                    // Avança para a próxima questão após 1.5 segundos
                     setTimeout(() => {
                         resolve();
-                    }, 1000)
+                    }, 1500);
                 }
             });
         });
-        
-        numeroQuestao++;
+    };
+
+    // Loop principal - mostra uma questão por vez
+    while (questaoAtual < questions.length) {
+        await mostrarQuestao(questaoAtual);
+        questaoAtual++;
     }
 
+    // Tela de resultado final
     container.innerHTML = `
         <div id="resultado-final">
-            <h2>🎉 Fim de Jogo! 🎉</h2>
-            <p>Jogador: <strong>${nomeJogador}</strong></p>
-            <p>Você acertou <strong>${acertos}</strong> de ${questions.length} questões!</p>
-            <p>${acertos === questions.length ? '🏆 Parabéns, você é um gênio!' : '👏 Continue praticando!'}</p>
-            <button id="btn-reiniciar">Jogar Novamente</button>
+            <h2>🏆 MISSÃO CONCLUÍDA 🏆</h2>
+            <p>👤 <strong>${nomeJogador}</strong></p>
+            <p>🔫 Acertos: <strong>${acertos}</strong> de ${questions.length}</p>
+            <p class="mensagem-final">
+                ${acertos === questions.length ? '💀 PERFEIÇÃO ABSOLUTA!' : 
+                  acertos >= questions.length * 0.6 ? '🎯 BOM TRABALHO, SOLDADO!' : 
+                  '🔰 TREINE MAIS, RECRUTA!'}
+            </p>
+            <button id="btn-reiniciar">NOVA MISSÃO</button>
         </div>
     `;
 
@@ -132,5 +168,5 @@ const mostrarQuestoes = async (nomeJogador) => {
     });
 }
 
-// Iniciar o jogo com a tela inicial
+// Inicia o jogo
 mostrarTelaInicial();
