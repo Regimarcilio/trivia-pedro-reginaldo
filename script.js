@@ -148,20 +148,71 @@ const iniciarTrivia = async (nomeJogador) => {
         questaoAtual++;
     }
 
-    // Tela de resultado final
-    container.innerHTML = `
-        <div id="resultado-final">
-            <h2>🏆 MISSÃO CONCLUÍDA 🏆</h2>
-            <p>👤 <strong>${nomeJogador}</strong></p>
-            <p>🔫 Acertos: <strong>${acertos}</strong> de ${questions.length}</p>
-            <p class="mensagem-final">
-                ${acertos === questions.length ? '💀 PERFEIÇÃO ABSOLUTA!' : 
-                  acertos >= questions.length * 0.6 ? '🎯 BOM TRABALHO, SOLDADO!' : 
-                  '🔰 TREINE MAIS, RECRUTA!'}
-            </p>
-            <button id="btn-reiniciar">NOVA MISSÃO</button>
-        </div>
-    `;
+// Tela de resultado final
+container.innerHTML = `
+    <div id="resultado-final">
+        <h2>🏆 MISSÃO CONCLUÍDA 🏆</h2>
+        <p>👤 <strong>${nomeJogador}</strong></p>
+        <p>🔫 Acertos: <strong>${acertos}</strong> de ${questions.length}</p>
+
+        <p class="mensagem-final">
+            ${acertos === questions.length ? '💀 PERFEIÇÃO ABSOLUTA!' : 
+              acertos >= questions.length * 0.6 ? '🎯 BOM TRABALHO, SOLDADO!' : 
+              '🔰 TREINE MAIS, RECRUTA!'}
+        </p>
+
+        <button id="btn-reiniciar">NOVA MISSÃO</button>
+        <button id="btn-gabarito">📋 VER GABARITO</button>
+
+        <div id="gabarito" style="display: none;"></div>
+    </div>
+`;
+
+    // Botão para iniciar uma nova missão
+    document.querySelector('#btn-reiniciar')?.addEventListener('click', () => {
+        mostrarTelaInicial();
+    });
+
+    // Botão para mostrar o gabarito
+    document.querySelector('#btn-gabarito')?.addEventListener('click', async () => {
+
+        const gabarito = document.querySelector('#gabarito');
+
+        gabarito.style.display = 'block';
+
+        gabarito.innerHTML = `
+            <h2>📋 GABARITO DA MISSÃO</h2>
+        `;
+
+        // Percorre todas as questões
+        for (let i = 0; i < questions.length; i++) {
+
+            const question = questions[i];
+
+            const perguntaTraduzida = decodeURIComponent(
+                await fetchTradutor(question.question)
+            );
+
+            const respostaTraduzida = decodeURIComponent(
+                await fetchTradutor(question.correct_answer)
+            );
+
+            gabarito.innerHTML += `
+                <div class="questao-gabarito">
+                    <h3>🎯 Questão ${i + 1}</h3>
+                    <p>${perguntaTraduzida}</p>
+                    <p>
+                        ✅ <strong>Resposta correta:</strong>
+                        ${respostaTraduzida}
+                    </p>
+                </div>
+            `;
+        }
+
+        // Esconde o botão depois que o gabarito for aberto
+        document.querySelector('#btn-gabarito').style.display = 'none';
+    });
+    
 
     document.querySelector('#btn-reiniciar')?.addEventListener('click', () => {
         mostrarTelaInicial();
